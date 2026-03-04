@@ -1,0 +1,889 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alex Zhang — Portfolio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Unbounded:wght@900&display=swap" rel="stylesheet" />
+
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f0ede6;
+    --orange: #f9a005;
+    --orange-dim: #c23a00;
+    --mono: 'DM Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --heavy: 'Unbounded', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--mono);
+    cursor: none;
+    overflow-x: hidden;
+  }
+
+  /* ─── CUSTOM CURSOR ─── */
+  #cursor-dot {
+    width: 8px; height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.08s ease, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  }
+  #cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--orange);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s cubic-bezier(.25,.46,.45,.94),
+                width 0.25s ease, height 0.25s ease,
+                border-color 0.2s ease, opacity 0.2s ease;
+  }
+  body:has(a:hover) #cursor-ring,
+  body:has(button:hover) #cursor-ring {
+    width: 56px; height: 56px;
+    border-color: var(--orange);
+    opacity: 0.6;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 2.5rem;
+    mix-blend-mode: difference;
+  }
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 6rem 2.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-name {
+    font-family: var(--display);
+    font-size: clamp(5rem, 16vw, 15rem);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-name span { color: var(--orange); }
+  .hero-sub {
+    margin-top: 2.5rem;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.85s forwards;
+  }
+  .hero-desc {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    max-width: 360px;
+    color: rgba(240,237,230,0.55);
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    background: var(--orange);
+    color: var(--black);
+    padding: 0.9rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: var(--white); transform: translateY(-2px); }
+  .hero-scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(240,237,230,0.3);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    animation: pulse 2.4s infinite;
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--orange), transparent);
+    animation: scrollDrop 2s infinite;
+  }
+  .hero-bg-num {
+    position: absolute; right: -2vw; top: 50%; transform: translateY(-50%);
+    font-family: var(--heavy);
+    font-size: 40vw;
+    color: rgba(255,77,0,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ─── SECTION BASE ─── */
+  section { padding: 7rem 2.5rem; position: relative; }
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 3rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--orange); opacity: 0.4; }
+
+  /* ─── WORK ─── */
+  #work { border-top: 1px solid rgba(255,255,255,0.07); }
+  .work-heading { font-family: var(--display); font-size: clamp(3rem, 8vw, 7rem); line-height: 0.92; margin-bottom: 4rem; }
+  .project-list { display: flex; flex-direction: column; gap: 0; }
+  .project-item {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    color: inherit;
+    transition: padding-left 0.3s cubic-bezier(.25,.46,.45,.94);
+    position: relative;
+    overflow: hidden;
+    cursor: none;
+  }
+  .project-item::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--orange);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s cubic-bezier(.25,.46,.45,.94);
+    z-index: 0; opacity: 0.05;
+  }
+  .project-item:hover::before { transform: scaleX(1); }
+  .project-item:hover { padding-left: 1rem; }
+  .project-item > * { position: relative; z-index: 1; }
+  .project-num { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--orange); opacity: 0.6; }
+  .project-title { font-family: var(--display); font-size: clamp(1.5rem, 3vw, 2.8rem); letter-spacing: 0.02em; line-height: 1; }
+  .project-tags { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+  .tag { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15); padding: 0.2rem 0.55rem; color: rgba(240,237,230,0.45); }
+  .project-arrow { font-size: 1.4rem; color: var(--orange); opacity: 0; transition: opacity 0.25s, transform 0.25s; transform: translateX(-8px); }
+  .project-item:hover .project-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ─── ABOUT ─── */
+  #about { border-top: 1px solid rgba(255,255,255,0.07); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+  .about-heading { font-family: var(--display); font-size: clamp(2.5rem, 5vw, 5rem); line-height: 0.92; margin-bottom: 2rem; }
+  .about-text { font-size: 0.85rem; line-height: 1.9; color: rgba(240,237,230,0.6); margin-bottom: 1.5rem; }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .skill-item { padding: 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,237,230,0.5); display: flex; align-items: center; gap: 0.6rem; }
+  .skill-item::before { content: '▸'; color: var(--orange); font-size: 0.6rem; }
+  .stat-item { padding: 2rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .stat-num { font-family: var(--display); font-size: 5rem; color: var(--orange); line-height: 1; }
+  .stat-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,237,230,0.4); margin-top: 0.4rem; }
+
+  /* ─── PHYSICSPLAYGROUND ─── */
+  #playground { border-top: 1px solid rgba(255,255,255,0.07); min-height: 100vh; display: flex; flex-direction: column; }
+  .playground-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+  .playground-heading { font-family: var(--display); font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 0.92; }
+  .playground-controls { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .ctrl-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--white); font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.55rem 1rem; cursor: none; transition: border-color 0.2s, background 0.2s, color 0.2s; }
+  .ctrl-btn:hover, .ctrl-btn.active { border-color: var(--orange); background: var(--orange); color: var(--black); }
+  .ctrl-btn.danger { border-color: rgba(255,77,0,0.4); }
+  .ctrl-btn.danger:hover { background: transparent; border-color: var(--orange); color: var(--orange); }
+  #physics-canvas { flex: 1; width: 100%; min-height: 520px; display: block; border: 1px solid rgba(255,255,255,0.07); background: #0d0d0d; }
+  .playground-hint { margin-top: 1rem; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,237,230,0.25); text-align: center; }
+
+  /* ─── CONTACT ─── */
+  #contact { border-top: 1px solid rgba(255,255,255,0.07); min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
+  .contact-heading { font-family: var(--display); font-size: clamp(3.5rem, 10vw, 10rem); line-height: 0.88; margin-bottom: 3rem; }
+  .contact-heading span { color: var(--orange); }
+  .contact-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .contact-link { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,237,230,0.5); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.2rem; transition: color 0.2s, border-color 0.2s; }
+  .contact-link:hover { color: var(--orange); border-color: var(--orange); }
+
+  /* ─── FOOTER ─── */
+  footer { padding: 2rem 2.5rem; border-top: 1px solid rgba(255,255,255,0.07); display: flex; justify-content: space-between; align-items: center; font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(240,237,230,0.25); text-transform: uppercase; }
+
+  /* ─── PROJECT DETAIL OVERLAY ─── */
+  #project-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: var(--black);
+    overflow-y: auto;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(.25,.46,.45,.94);
+  }
+  #project-overlay.open { opacity: 1; pointer-events: all; }
+
+  .pd-topbar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .pd-back {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: none; border: none; color: rgba(240,237,230,0.5);
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em;
+    text-transform: uppercase; cursor: none; transition: color 0.2s;
+  }
+  .pd-back:hover { color: var(--orange); }
+  .pd-header { padding: 5rem 2.5rem 3rem; border-bottom: 1px solid rgba(255,255,255,0.07); max-width: 1000px; }
+  .pd-eyebrow { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
+  .pd-title { font-family: var(--display); font-size: clamp(3.5rem, 10vw, 9rem); line-height: 0.88; margin-bottom: 2rem; }
+  .pd-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .pd-tag { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15); padding: 0.22rem 0.6rem; color: rgba(240,237,230,0.45); }
+
+  .pd-body { padding: 4rem 2.5rem; max-width: 1000px; }
+  .pd-highlights { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.07); margin-bottom: 4rem; }
+  .pd-hl { background: var(--black); padding: 1.8rem; }
+  .pd-hl-num { font-family: var(--display); font-size: 3rem; color: var(--orange); line-height: 1; }
+  .pd-hl-lbl { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(240,237,230,0.4); margin-top: 0.3rem; }
+
+  .pd-section { margin-bottom: 3.5rem; }
+  .pd-section-label { font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+  .pd-section-label::after { content: ''; flex: 1; max-width: 50px; height: 1px; background: var(--orange); opacity: 0.35; }
+  .pd-text { font-size: 0.82rem; line-height: 1.95; color: rgba(240,237,230,0.6); max-width: 680px; }
+  .pd-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .pd-bullets li { font-size: 0.78rem; line-height: 1.78; color: rgba(240,237,230,0.58); padding-left: 1.3rem; position: relative; }
+  .pd-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--orange); font-size: 0.56rem; top: 0.18rem; }
+  .pd-tech { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .pd-pill { font-size: 0.6rem; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.12); padding: 0.25rem 0.6rem; color: rgba(240,237,230,0.5); text-transform: uppercase; }
+
+  #experience { border-top: 1px solid rgba(255,255,255,0.07); }
+  #projects { border-top: 1px solid rgba(255,255,255,0.07); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+  @keyframes scrollDrop { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .project-item { grid-template-columns: 2rem 1fr auto; }
+    nav, .pd-topbar { padding: 1rem 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 5rem 1.5rem 2.5rem; }
+    .pd-header, .pd-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
+</style>
+</head>
+
+<body>
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">AZ</a>
+    <ul class="nav-links">
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#playground">Playground</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-num">AZ</div>
+    <p class="hero-eyebrow">Mech Eng · Developer · Founder · Varsity Athlete · UofC 2028</p>
+    <h1 class="hero-name">ALEX<br /><span>ZHANG</span></h1>
+    <div class="hero-sub">
+      <p class="hero-desc">
+        Mechanical Engineering student building at the intersection of hardware, software, and design.
+        Ex-<strong style="color:var(--white);font-weight:400">Mercedes-Benz</strong>. Founder of
+        <strong style="color:var(--white);font-weight:400">Jandae</strong>. Rowing varsity through all of it.
+      </p>
+      <a href="#work" class="hero-cta">View Work →</a>
+    </div>
+    <div class="hero-scroll-hint"><div class="scroll-line"></div>Scroll</div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-label">Work Experience</div>
+    <h2 class="work-heading reveal">WHERE<br />I'VE<br />SHIPPED</h2>
+
+    <div class="project-list">
+      <div class="project-item reveal" onclick="openProject('mercedes')">
+        <span class="project-num">01</span>
+        <div class="project-info">
+          <div class="project-title">Mercedes-Benz</div>
+          <div class="project-tags">
+            <span class="tag">Production Eng</span><span class="tag">AI Vision</span><span class="tag">Python</span><span class="tag">Feb–Aug 2025</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </div>
+
+      <div class="project-item reveal" onclick="openProject('velric')">
+        <span class="project-num">02</span>
+        <div class="project-info">
+          <div class="project-title">Velric AI</div>
+          <div class="project-tags">
+            <span class="tag">Next.js</span><span class="tag">OpenAI</span><span class="tag">Supabase</span><span class="tag">Oct 2025–Present</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </div>
+
+      <div class="project-item reveal" onclick="openProject('jandae')">
+        <span class="project-num">03</span>
+        <div class="project-info">
+          <div class="project-title">Jandae</div>
+          <div class="project-tags">
+            <span class="tag">Founder</span><span class="tag">E-Commerce</span><span class="tag">Brand</span><span class="tag">Oct 2025–Present</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </div>
+
+      <div class="project-item reveal" onclick="openProject('research')">
+        <span class="project-num">04</span>
+        <div class="project-info">
+          <div class="project-title">ML Energy Forecasting</div>
+          <div class="project-tags">
+            <span class="tag">UofC Research</span><span class="tag">PyTorch</span><span class="tag">Time-Series</span><span class="tag">Sept 2024–Present</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </div>
+
+      <div class="project-item reveal" onclick="openProject('deco')">
+        <span class="project-num">05</span>
+        <div class="project-info">
+          <div class="project-title">DECO Windshield Repair</div>
+          <div class="project-tags">
+            <span class="tag">Sales</span><span class="tag">Repair Tech</span><span class="tag">May–Aug 2024</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Personal Projects</div>
+    <h2 class="work-heading reveal">THINGS<br />I'VE<br />BUILT</h2>
+
+    <div class="project-list">
+      <div class="project-item reveal" onclick="openProject('heatbeast')">
+        <span class="project-num">01</span>
+        <div class="project-info">
+          <div class="project-title">Heat Beast</div>
+          <div class="project-tags">
+            <span class="tag">Raspberry Pi</span><span class="tag">Python</span><span class="tag">Embedded UI</span><span class="tag">2024</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </div>
+
+      <div class="project-item reveal" onclick="openProject('weatherhouse')">
+        <span class="project-num">02</span>
+        <div class="project-info">
+          <div class="project-title">Weather House</div>
+          <div class="project-tags">
+            <span class="tag">IoT</span><span class="tag">WeatherAPI</span><span class="tag">Fusion 360</span><span class="tag">2024</span>
+          </div>
+        </div>
+        <span class="project-arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-label">About Me</div>
+    <div class="about-grid">
+      <div>
+        <h2 class="about-heading reveal">ENGINEER.<br />BUILDER.<br />CREATOR.</h2>
+        <p class="about-text reveal">
+          I'm a Mechanical Engineering student at the University of Calgary (Class of 2028) and a Dino's Varsity Rowing athlete. I build things — in CAD, in code, and in business.
+        </p>
+        <p class="about-text reveal">
+          At Mercedes-Benz I cut a $10,000 tooling cost to $100 and built AI vision systems for live production lines. At Velric AI I'm shipping Next.js features with OpenAI integrations. With Jandae, I took a clothing brand from zero to five figures while designing every product myself.
+        </p>
+        <p class="about-text reveal">
+          Currently open to Summer 2026 internships in software engineering, ML, or mechanical/production engineering.
+        </p>
+
+        <div class="skills-grid reveal">
+          <div class="skill-item">Python · ML</div>
+          <div class="skill-item">Next.js · TypeScript</div>
+          <div class="skill-item">Siemens NX · CAD</div>
+          <div class="skill-item">PyTorch · TensorFlow</div>
+          <div class="skill-item">Supabase · PostgreSQL</div>
+          <div class="skill-item">GD&T · Gage R&R</div>
+          <div class="skill-item">PowerBI · Data Viz</div>
+          <div class="skill-item">Raspberry Pi · Edge</div>
+        </div>
+      </div>
+
+      <div class="about-stat-col reveal">
+        <div class="stat-item"><div class="stat-num">99%</div><div class="stat-label">Tooling Cost Reduced @ Mercedes</div></div>
+        <div class="stat-item"><div class="stat-num">5fig</div><div class="stat-label">Revenue — Jandae Brand</div></div>
+        <div class="stat-item"><div class="stat-num">2K+</div><div class="stat-label">Sales & Repairs Completed</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAYGROUND -->
+  <section id="playground">
+    <div class="section-label">Interactive</div>
+    <div class="playground-header">
+      <h2 class="playground-heading reveal">PHYSICS<br />PLAYGROUND</h2>
+      <div class="playground-controls reveal">
+        <button class="ctrl-btn active" id="btn-gravity" onclick="setMode('gravity')">Gravity</button>
+        <button class="ctrl-btn" id="btn-repel" onclick="setMode('repel')">Repel</button>
+        <button class="ctrl-btn" id="btn-attract" onclick="setMode('attract')">Attract</button>
+        <button class="ctrl-btn" id="btn-explode" onclick="explode()">Explode</button>
+        <button class="ctrl-btn danger" onclick="resetParticles()">Reset</button>
+      </div>
+    </div>
+    <canvas id="physics-canvas"></canvas>
+    <p class="playground-hint">Move your mouse over the canvas · Click to spawn particles · Toggle physics modes above</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="contact-heading reveal">LET'S<br />BUILD<br />SOME<span>THING.</span></h2>
+    <div class="contact-links reveal">
+      <a href="mailto:alex.zhang1524@gmail.com" class="contact-link">alex.zhang1524@gmail.com</a>
+      <a href="https://linkedin.com/in/alexzhang1524/" target="_blank" rel="noopener" class="contact-link">LinkedIn</a>
+      <a href="tel:8253657581" class="contact-link">825-365-7581</a>
+      <a href="Alex_Zhang_Resume.pdf" download class="contact-link">Resume ↓</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Alex Zhang</span>
+    <span>Designed & Built with ♥</span>
+    <span>Calgary, AB</span>
+  </footer>
+
+  <!-- ─── PROJECT DETAIL OVERLAY ─── -->
+  <div id="project-overlay">
+    <div class="pd-topbar">
+      <button class="pd-back" onclick="closeProject()">← Back to Work</button>
+      <span id="pd-nav-label" style="font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,237,230,0.3)"></span>
+    </div>
+    <div class="pd-header">
+      <div class="pd-eyebrow" id="pd-eyebrow"></div>
+      <div class="pd-title" id="pd-title"></div>
+      <div class="pd-meta" id="pd-meta"></div>
+    </div>
+    <div class="pd-body">
+      <div class="pd-highlights" id="pd-highlights"></div>
+      <div class="pd-section">
+        <div class="pd-section-label">Overview</div>
+        <div class="pd-text" id="pd-overview"></div>
+      </div>
+      <div class="pd-section">
+        <div class="pd-section-label">What I Built</div>
+        <ul class="pd-bullets" id="pd-bullets"></ul>
+      </div>
+      <div class="pd-section">
+        <div class="pd-section-label">Tech Stack</div>
+        <div class="pd-tech" id="pd-tech"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // ─── CURSOR ───
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  function animateCursor() {
+    dot.style.left = mx + 'px';
+    dot.style.top = my + 'px';
+    rx += (mx - rx) * 0.14;
+    ry += (my - ry) * 0.14;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // ─── SCROLL REVEAL ───
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ─── PROJECT DATA (PHOTOS REMOVED) ───
+  const PROJECTS = {
+    mercedes: {
+      eyebrow: 'Vehicle Production Engineering Intern · Mercedes-Benz · Feb – Aug 2025 · Vance, AL',
+      title: 'MERCEDES-BENZ',
+      navLabel: 'Production Eng Intern',
+      tags: ['Python', 'Siemens NX', 'PowerBI', 'AI Vision', 'GD&T', 'Gage R&R'],
+      highlights: [
+        { num: '99%', lbl: 'Tooling Cost Reduction' },
+        { num: '+15%', lbl: 'Alignment Performance' },
+        { num: '$9,900', lbl: 'Saved on Single Jig' },
+      ],
+      overview: 'At Mercedes-Benz\'s Vance, AL plant I worked as a Vehicle Production Engineering Intern on the SFM platform. I split my time between mechanical fixture design, statistical process tooling, AI vision system development, and cross-functional technical leadership — shipping real work on a live production line.',
+      bullets: [
+        'Engineered a V167 striker-liftgate alignment jig in Siemens NX using Smaragd PLM CAD data — applied GD&T and tolerance stack-up analysis to reduce tooling cost from $10,000 to $100 (99% reduction) while improving alignment performance by 15%.',
+        'Built a Python-based Gage R&R statistical tool automating Cp/Cpk, standard deviation, and mean shift calculations to validate measurement system capability.',
+        'Developed a PowerBI dashboard integrating production defect data and AI fastener detection outputs to visualize KPIs and provide structured feedback to vision system engineers.',
+        'Co-developed PVC and underbody AI vision use cases — configured industrial cameras, deployed edge devices, and optimized precision/recall/false detection rates via Python visualization scripts.',
+        'Led SK Rear and SK Powertrain/Chassis cross-functional technical reviews, maintaining structured documentation for SFM platform alignment.',
+        'Performed dimensional root cause analysis using flushness and gap measurements to implement and document corrective actions for process capability.',
+      ],
+      tech: ['Python', 'Siemens NX', 'Smaragd PLM', 'PowerBI', 'Power Automate', 'GD&T', 'Gage R&R', 'SPC', 'OpenCV', 'Edge Devices'],
+    },
+
+    velric: {
+      eyebrow: 'Software Development Intern · Velric AI · Oct 2025 – Present · Remote, NY',
+      title: 'VELRIC AI',
+      navLabel: 'SWE Intern',
+      tags: ['Next.js', 'TypeScript', 'Supabase', 'OpenAI', 'TailwindCSS'],
+      highlights: [
+        { num: 'AI', lbl: 'Mission Personalization' },
+        { num: 'Full', lbl: 'Stack Ownership' },
+        { num: 'Live', lbl: 'Production Shipping' },
+      ],
+      overview: 'Velric AI is a New York-based AI startup where I work as a Software Development Intern. I\'m building full-stack features across the mission-task infrastructure, AI personalization layer, and frontend theming — shipping directly to production in Next.js and Supabase.',
+      bullets: [
+        'Architected mission-task infrastructure in Supabase using normalized PostgreSQL schema design, indexed SQL queries, and relational data modeling with secure auth integration.',
+        'Implemented dynamic light/dark theme support in Next.js (TypeScript) using state-driven rendering, TailwindCSS theming, and component-level UI optimization.',
+        'Integrated OpenAI API within Next.js API routes to build AI-driven mission personalization — engineered prompt pipelines, response parsing, and intent-based task generation for adaptive user experiences.',
+      ],
+      tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'OpenAI API', 'TailwindCSS', 'Node.js', 'REST APIs', 'Git / CI-CD'],
+    },
+
+    jandae: {
+      eyebrow: 'Founder · Jandae · Oct 2025 – Present · Calgary, AB',
+      title: 'JANDAE',
+      navLabel: 'Founder',
+      tags: ['Founder', 'E-Commerce', 'Product Design', 'Brand Building'],
+      highlights: [
+        { num: '5fig', lbl: 'Revenue Generated' },
+        { num: '100%', lbl: 'Self-Designed Products' },
+        { num: '0→1', lbl: 'Built from Scratch' },
+      ],
+      overview: 'Jandae is a vintage clothing brand I founded, scaled to five-figure revenue, and run end-to-end — from product concept to manufacturing to digital storefront. Every product is designed by me, every system is built by me.',
+      bullets: [
+        'Founded and scaled a vintage clothing brand to five-figure revenue, owning end-to-end product development and manufacturing.',
+        'Designed all products from concept to production: fabric selection, fit development, sampling iterations, and detail refinement.',
+        'Built and launched the brand e-commerce website, optimizing user flows, checkout experience, and conversion pathways.',
+      ],
+      tech: ['E-Commerce', 'Web Dev', 'Product Design', 'Fabric Sourcing', 'Brand Strategy', 'Conversion Optimization'],
+    },
+
+    research: {
+      eyebrow: 'Undergraduate Research Assistant · University of Calgary · Sept 2024 – Present',
+      title: 'ML ENERGY FORECASTING',
+      navLabel: 'UofC Research',
+      tags: ['ML', 'PyTorch', 'Time-Series', 'AESO', 'Python'],
+      highlights: [
+        { num: 'AESO', lbl: 'Real Market Data' },
+        { num: 'RNN', lbl: 'Architecture Used' },
+        { num: 'Live', lbl: 'Deployment Target' },
+      ],
+      overview: 'As an Undergraduate Research Assistant at the University of Calgary, I\'m developing a machine learning forecasting system to optimize electricity purchasing strategies by modeling time-series price fluctuations and demand variability in the Alberta energy market (AESO).',
+      bullets: [
+        'Developing a time-series ML model to optimize electricity purchasing strategies by modeling AESO price fluctuations and demand variability.',
+        'Validated model performance using historical AESO market data — applied MAE/RMSE error metrics and iterative hyperparameter tuning to improve prediction accuracy and robustness.',
+        'Building a predictive decision-support system to identify optimal purchasing windows from real-time AESO price signals for live deployment.',
+      ],
+      tech: ['Python', 'PyTorch', 'TensorFlow', 'StatsForecast', 'Pandas', 'NumPy', 'Time-Series', 'MAE / RMSE', 'Feature Engineering', 'Hyperparameter Tuning'],
+    },
+
+    deco: {
+      eyebrow: 'Sales & Repair Technician · DECO Windshield Repair · May – Aug 2024 · Calgary, AB',
+      title: 'DECO WINDSHIELD',
+      navLabel: 'Sales & Repair Tech',
+      tags: ['Sales', 'Repair Tech', 'Customer Service', 'Summer 2024'],
+      highlights: [
+        { num: '2K+', lbl: 'Protection Plans Sold' },
+        { num: '1K+', lbl: 'Repairs Completed' },
+        { num: '100%', lbl: 'Daily Targets Met' },
+      ],
+      overview: 'At DECO Windshield Repair I worked as a Sales & Repair Technician over the summer, combining hands-on precision repair work with high-volume performance-driven sales. I operated under tight time constraints while maintaining quality and hitting daily revenue targets.',
+      bullets: [
+        'Sold 2,000+ protection plans and completed 1,000+ repairs by combining technical product knowledge with performance-driven sales execution.',
+        'Performed high-volume windshield repair operations using precision power tools including drills, resin injection systems, and UV curing equipment to restore structural integrity.',
+        'Executed hands-on fabrication and surface preparation procedures — precise chip cleaning, vacuum sealing, and controlled resin application under time-sensitive conditions.',
+        'Managed defect assessment, repair validation, and end-to-end customer service while consistently meeting daily operational and revenue targets.',
+      ],
+      tech: ['Resin Injection', 'UV Curing', 'Vacuum Sealing', 'Precision Tools', 'Customer Service', 'Sales'],
+    },
+
+    heatbeast: {
+      eyebrow: 'Embedded Systems Project · UofC · Feb – Apr 2024',
+      title: 'HEAT BEAST',
+      navLabel: 'Embedded Project',
+      tags: ['Python', 'Raspberry Pi', 'Fusion 360', 'Embedded UI'],
+      highlights: [
+        { num: '4', lbl: 'Display Types' },
+        { num: '100%', lbl: 'Custom Built' },
+        { num: '2mo', lbl: 'Build Time' },
+      ],
+      overview: 'Heat Beast is a fully custom-programmed smart microwave cooking companion built on a Raspberry Pi. The project focused on creating an intelligent embedded system with a rich physical UI — going beyond a standard microwave with programmable cook profiles, real-time feedback, and multi-hardware display orchestration.',
+      bullets: [
+        'Programmed advanced cooking control algorithms in Python on Raspberry Pi — handling timed sequences, power levels, and sensor-driven adjustments.',
+        'Designed and integrated a multi-component embedded UI: dot-matrix display, 7-segment timer, LCD status screen, and audio feedback for a cohesive experience.',
+        'Modeled the physical enclosure and hardware layout in Fusion 360, prototyping fit and cable routing before final assembly.',
+        'Implemented hardware-software integration layer for reliable serial communication between all display components and the main controller.',
+      ],
+      tech: ['Python', 'Raspberry Pi', 'Fusion 360', 'Dot-Matrix', '7-Segment LED', 'LCD Module', 'Serial Comm', 'GPIO'],
+    },
+
+    weatherhouse: {
+      eyebrow: 'IoT Project · UofC · Apr – May 2024',
+      title: 'WEATHER HOUSE',
+      navLabel: 'IoT Project',
+      tags: ['Python', 'Raspberry Pi', 'WeatherAPI', 'Fusion 360'],
+      highlights: [
+        { num: 'Live', lbl: 'Real-Time API Data' },
+        { num: 'RGB', lbl: 'Dynamic Color Output' },
+        { num: '1mo', lbl: 'Build Time' },
+      ],
+      overview: 'Weather House is an ambient IoT display that visualizes real-time weather data through dynamic color and LCD output. Built in Fusion 360 and powered by a Raspberry Pi, it pulls live conditions from WeatherAPI and translates them into intuitive color shifts — making environmental data readable at a glance from across the room.',
+      bullets: [
+        'Integrated WeatherAPI via HTTP requests in Python, polling live temperature, conditions, and UV data on a configurable refresh interval.',
+        'Mapped weather condition codes to dynamic RGB LED outputs — the color of the display communicates the weather without any screen interaction.',
+        'Displayed detailed weather stats on an LCD module with a clean formatted layout.',
+        'Designed and fabricated the physical housing in Fusion 360, optimizing for LED diffusion and internal cable management.',
+        'Implemented error handling and graceful fallback for API timeouts and network interruptions.',
+      ],
+      tech: ['Python', 'Raspberry Pi', 'WeatherAPI', 'REST / HTTP', 'RGB LEDs', 'LCD Module', 'Fusion 360', 'GPIO'],
+    },
+  };
+
+  // ─── OVERLAY LOGIC ───
+  const overlay = document.getElementById('project-overlay');
+
+  function openProject(id) {
+    const p = PROJECTS[id];
+    if (!p) return;
+
+    document.getElementById('pd-eyebrow').textContent = p.eyebrow;
+    document.getElementById('pd-title').textContent = p.title;
+    document.getElementById('pd-nav-label').textContent = p.navLabel;
+    document.getElementById('pd-meta').innerHTML = p.tags.map(t => `<span class="pd-tag">${t}</span>`).join('');
+
+    document.getElementById('pd-highlights').innerHTML = p.highlights
+      .map(h => `<div class="pd-hl"><div class="pd-hl-num">${h.num}</div><div class="pd-hl-lbl">${h.lbl}</div></div>`)
+      .join('');
+
+    document.getElementById('pd-overview').textContent = p.overview;
+    document.getElementById('pd-bullets').innerHTML = p.bullets.map(b => `<li>${b}</li>`).join('');
+    document.getElementById('pd-tech').innerHTML = p.tech.map(t => `<span class="pd-pill">${t}</span>`).join('');
+
+    overlay.scrollTop = 0;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProject() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
+
+  // ─── PHYSICS PLAYGROUND ───
+  const canvas = document.getElementById('physics-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], mouse = { x: -1000, y: -1000, inside: false }, mode = 'gravity';
+
+  function resize() {
+    const r = canvas.getBoundingClientRect();
+    canvas.width = r.width;
+    canvas.height = r.height;
+    W = canvas.width;
+    H = canvas.height;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor(x, y, vx, vy) {
+      this.x = x ?? Math.random() * W;
+      this.y = y ?? Math.random() * H;
+      this.vx = vx ?? (Math.random() - 0.5) * 3;
+      this.vy = vy ?? (Math.random() - 0.5) * 3;
+      this.r = 3 + Math.random() * 4;
+      this.hue = Math.random() < 0.3 ? 18 : (Math.random() < 0.5 ? 30 : 0);
+      this.alpha = 0.75 + Math.random() * 0.25;
+      this.trail = [];
+    }
+    update() {
+      this.trail.push({ x: this.x, y: this.y });
+      if (this.trail.length > 8) this.trail.shift();
+
+      const dx = mouse.x - this.x, dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy) || 1, inf = 180;
+
+      if (mouse.inside && dist < inf) {
+        const f = (inf - dist) / inf;
+        if (mode === 'repel') { this.vx -= (dx / dist) * f * 1.2; this.vy -= (dy / dist) * f * 1.2; }
+        else if (mode === 'attract') { this.vx += (dx / dist) * f * 0.8; this.vy += (dy / dist) * f * 0.8; }
+        else if (mode === 'gravity') { this.vx += (dx / dist) * f * 0.3; this.vy += (dy / dist) * f * 0.3; }
+      }
+
+      if (mode === 'gravity') this.vy += 0.06;
+
+      this.vx *= 0.985; this.vy *= 0.985;
+
+      const spd = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+      if (spd > 14) { this.vx = (this.vx / spd) * 14; this.vy = (this.vy / spd) * 14; }
+
+      this.x += this.vx; this.y += this.vy;
+
+      if (this.x < this.r) { this.x = this.r; this.vx *= -0.7; }
+      if (this.x > W - this.r) { this.x = W - this.r; this.vx *= -0.7; }
+      if (this.y < this.r) { this.y = this.r; this.vy *= -0.7; }
+      if (this.y > H - this.r) { this.y = H - this.r; this.vy *= -0.7; }
+    }
+    draw() {
+      for (let i = 0; i < this.trail.length; i++) {
+        const t = this.trail[i], a = (i / this.trail.length) * 0.25 * this.alpha;
+        ctx.beginPath();
+        ctx.arc(t.x, t.y, this.r * (i / this.trail.length) * 0.7, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue},100%,55%,${a})`;
+        ctx.fill();
+      }
+
+      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 3);
+      g.addColorStop(0, `hsla(${this.hue},100%,60%,${this.alpha * 0.35})`);
+      g.addColorStop(1, `hsla(${this.hue},100%,50%,0)`);
+
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+      ctx.fillStyle = g; ctx.fill();
+
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${this.hue},100%,65%,${this.alpha})`;
+      ctx.fill();
+    }
+  }
+
+  function spawnParticles(n = 80) { for (let i = 0; i < n; i++) particles.push(new Particle()); }
+  function resetParticles() { particles = []; spawnParticles(80); }
+  function explode() {
+    const cx = W / 2, cy = H / 2;
+    particles.forEach(p => {
+      const dx = p.x - cx, dy = p.y - cy, d = Math.sqrt(dx * dx + dy * dy) || 1;
+      p.vx += (dx / d) * 18;
+      p.vy += (dy / d) * 18;
+    });
+  }
+  function setMode(m) {
+    mode = m;
+    document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+    const map = { gravity: 'btn-gravity', repel: 'btn-repel', attract: 'btn-attract' };
+    if (map[m]) document.getElementById(map[m]).classList.add('active');
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = (e.clientX - r.left) * (canvas.width / r.width);
+    mouse.y = (e.clientY - r.top) * (canvas.height / r.height);
+    mouse.inside = true;
+  });
+  canvas.addEventListener('mouseleave', () => { mouse.inside = false; });
+  canvas.addEventListener('click', e => {
+    const r = canvas.getBoundingClientRect();
+    const cx = (e.clientX - r.left) * (canvas.width / r.width);
+    const cy = (e.clientY - r.top) * (canvas.height / r.height);
+    for (let i = 0; i < 12; i++) {
+      const a = (i / 12) * Math.PI * 2, s = 2 + Math.random() * 4;
+      particles.push(new Particle(cx, cy, Math.cos(a) * s, Math.sin(a) * s));
+    }
+  });
+
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 80) {
+          ctx.strokeStyle = `rgba(255,77,0,${(1 - d / 80) * 0.18})`;
+          ctx.lineWidth = 0.8;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function loop() {
+    ctx.fillStyle = 'rgba(13,13,13,0.22)';
+    ctx.fillRect(0, 0, W, H);
+    drawConnections();
+    particles.forEach(p => { p.update(); p.draw(); });
+    if (particles.length > 300) particles.splice(0, particles.length - 300);
+    requestAnimationFrame(loop);
+  }
+
+  spawnParticles(80);
+  loop();
+</script>
+</body>
+</html>
+```

@@ -8,9 +8,13 @@ The goal of this site is to present my work in a simple, fast, and accessible fo
 
 🔧 What’s Inside
 Projects – Engineering builds, AI systems, and computer vision work
+
 Experience – Internship experience at Mercedes-Benz and work in data analytics and production systems
+
 Skills – Software, mechanical design, and data tools
+
 Contact – Ways to connect and collaborate
+
 🛠️ Built With
 HTML (no frameworks or libraries)
 Clean and minimal design

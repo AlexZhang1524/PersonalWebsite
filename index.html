@@ -271,7 +271,11 @@
     text-transform: uppercase; cursor: none; transition: color 0.2s;
   }
   .pd-back:hover { color: var(--orange); }
-  .pd-header { padding: 5rem 2.5rem 3rem; border-bottom: 1px solid rgba(255,255,255,0.07); max-width: 1000px; }
+  .pd-header {
+    padding: 5rem 2.5rem 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    max-width: 1000px;
+  }
   .pd-eyebrow { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--orange); margin-bottom: 1rem; }
   .pd-title { font-family: var(--display); font-size: clamp(3.5rem, 10vw, 9rem); line-height: 0.88; margin-bottom: 2rem; }
   .pd-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
@@ -293,6 +297,59 @@
   .pd-tech { display: flex; flex-wrap: wrap; gap: 0.45rem; }
   .pd-pill { font-size: 0.6rem; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.12); padding: 0.25rem 0.6rem; color: rgba(240,237,230,0.5); text-transform: uppercase; }
 
+  .pd-gallery-section { display: none; margin-bottom: 3.5rem; }
+  .pd-gallery-section.has-images { display: block; }
+  .pd-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .pd-gallery-item {
+    position: relative;
+    overflow: hidden;
+    min-height: 280px;
+    aspect-ratio: 4 / 3;
+    margin: 0;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: #111;
+  }
+  .pd-gallery-item.wide {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 8;
+  }
+  .pd-gallery-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.55s cubic-bezier(.25,.46,.45,.94), opacity 0.25s ease;
+  }
+  .pd-gallery-item:hover .pd-gallery-image { transform: scale(1.025); }
+  .pd-gallery-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 3rem 1rem 1rem;
+    font-size: 0.58rem;
+    line-height: 1.5;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(240,237,230,0.78);
+    background: linear-gradient(to top, rgba(10,10,10,0.92), transparent);
+  }
+  .pd-gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+    text-align: center;
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 4rem);
+    color: rgba(240,237,230,0.12);
+  }
+
   #experience { border-top: 1px solid rgba(255,255,255,0.07); }
   #projects { border-top: 1px solid rgba(255,255,255,0.07); }
 
@@ -310,6 +367,10 @@
     section { padding: 5rem 1.5rem; }
     #hero { padding: 5rem 1.5rem 2.5rem; }
     .pd-header, .pd-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .pd-header { padding-top: 3rem; }
+    .pd-gallery { grid-template-columns: 1fr; }
+    .pd-gallery-item.wide { grid-column: auto; aspect-ratio: 4 / 3; }
+    .pd-hero { min-height: 260px; height: min(62vw, 420px); }
   }
 </style>
 </head>
@@ -357,7 +418,7 @@
         <div class="project-info">
           <div class="project-title">Mercedes-Benz</div>
           <div class="project-tags">
-            <span class="tag">Production Eng</span><span class="tag">AI Vision</span><span class="tag">Python</span><span class="tag">Feb–Aug 2025</span>
+            <span class="tag">Quality Eng</span><span class="tag">AI Vision</span><span class="tag">Python</span><span class="tag">Feb–Aug 2025</span>
           </div>
         </div>
         <span class="project-arrow">→</span>
@@ -452,7 +513,7 @@
           At Mercedes-Benz I cut a $10,000 tooling cost to $100 and built AI vision systems for live production lines. At Velric AI I'm shipping Next.js features with OpenAI integrations. With Jandae, I took a clothing brand from zero to five figures while designing every product myself.
         </p>
         <p class="about-text reveal">
-          Currently open to Summer 2026 internships in software engineering, ML, or mechanical/production engineering.
+          Currently open to fall 2026 internships in mechanical, production, quality, and electrical engineering.
         </p>
 
         <div class="skills-grid reveal">
@@ -527,6 +588,10 @@
         <div class="pd-section-label">Overview</div>
         <div class="pd-text" id="pd-overview"></div>
       </div>
+      <div class="pd-gallery-section" id="pd-gallery-section">
+        <div class="pd-section-label">Project Gallery</div>
+        <div class="pd-gallery" id="pd-gallery"></div>
+      </div>
       <div class="pd-section">
         <div class="pd-section-label">What I Built</div>
         <ul class="pd-bullets" id="pd-bullets"></ul>
@@ -569,19 +634,24 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ─── PROJECT DATA (PHOTOS REMOVED) ───
+  // ─── PROJECT DATA ───
   const PROJECTS = {
     mercedes: {
       eyebrow: 'Vehicle Production Engineering Intern · Mercedes-Benz · Feb – Aug 2025 · Vance, AL',
       title: 'MERCEDES-BENZ',
-      navLabel: 'Production Eng Intern',
+      navLabel: 'Quality Eng Intern',
+      images: [
+        { src: 'images/mercedes/hero.jpg', alt: 'Mercedes-Benz engineering project', caption: 'V167 striker alignment and production-quality engineering work', wide: true },
+        { src: 'images/mercedes/image-2.jpg', alt: 'Mercedes-Benz engineering project additional view', caption: 'Add a second project image here' },
+        { src: 'images/mercedes/image-3.jpg', alt: 'Mercedes-Benz engineering project additional view', caption: 'Add a third project image here' },
+      ],
       tags: ['Python', 'Siemens NX', 'PowerBI', 'AI Vision', 'GD&T', 'Gage R&R'],
       highlights: [
         { num: '99%', lbl: 'Tooling Cost Reduction' },
         { num: '+15%', lbl: 'Alignment Performance' },
         { num: '$9,900', lbl: 'Saved on Single Jig' },
       ],
-      overview: 'At Mercedes-Benz\'s Vance, AL plant I worked as a Vehicle Production Engineering Intern on the SFM platform. I split my time between mechanical fixture design, statistical process tooling, AI vision system development, and cross-functional technical leadership — shipping real work on a live production line.',
+      overview: 'At Mercedes-Benz, I worked as a Vehicle Production Engineering Intern on the EV Quality Team. I split my time between mechanical fixture design, statistical process tooling, AI vision system development, and cross-functional technical leadership — shipping real work on a live production line.',
       bullets: [
         'Engineered a V167 striker-liftgate alignment jig in Siemens NX using Smaragd PLM CAD data — applied GD&T and tolerance stack-up analysis to reduce tooling cost from $10,000 to $100 (99% reduction) while improving alignment performance by 15%.',
         'Built a Python-based Gage R&R statistical tool automating Cp/Cpk, standard deviation, and mean shift calculations to validate measurement system capability.',
@@ -597,6 +667,11 @@
       eyebrow: 'Software Development Intern · Velric AI · Oct 2025 – Present · Remote, NY',
       title: 'VELRIC AI',
       navLabel: 'SWE Intern',
+      images: [
+        { src: 'images/velric/hero.jpg', alt: 'Velric AI software project', caption: 'Full-stack AI product development', wide: true },
+        { src: 'images/velric/image-2.jpg', alt: 'Velric AI software project additional view', caption: 'Add a second project image here' },
+        { src: 'images/velric/image-3.jpg', alt: 'Velric AI software project additional view', caption: 'Add a third project image here' },
+      ],
       tags: ['Next.js', 'TypeScript', 'Supabase', 'OpenAI', 'TailwindCSS'],
       highlights: [
         { num: 'AI', lbl: 'Mission Personalization' },
@@ -616,6 +691,11 @@
       eyebrow: 'Founder · Jandae · Oct 2025 – Present · Calgary, AB',
       title: 'JANDAE',
       navLabel: 'Founder',
+      images: [
+        { src: 'images/jandae/hero.jpg', alt: 'Jandae clothing brand product', caption: 'Product design, manufacturing, and brand development', wide: true },
+        { src: 'images/jandae/image-2.jpg', alt: 'Jandae clothing brand product additional view', caption: 'Add a second project image here' },
+        { src: 'images/jandae/image-3.jpg', alt: 'Jandae clothing brand product additional view', caption: 'Add a third project image here' },
+      ],
       tags: ['Founder', 'E-Commerce', 'Product Design', 'Brand Building'],
       highlights: [
         { num: '5fig', lbl: 'Revenue Generated' },
@@ -635,6 +715,11 @@
       eyebrow: 'Undergraduate Research Assistant · University of Calgary · Sept 2024 – Present',
       title: 'ML ENERGY FORECASTING',
       navLabel: 'UofC Research',
+      images: [
+        { src: 'images/research/hero.jpg', alt: 'Machine-learning energy forecasting project', caption: 'AESO electricity-price and demand forecasting', wide: true },
+        { src: 'images/research/image-2.jpg', alt: 'Machine-learning energy forecasting project additional view', caption: 'Add a second project image here' },
+        { src: 'images/research/image-3.jpg', alt: 'Machine-learning energy forecasting project additional view', caption: 'Add a third project image here' },
+      ],
       tags: ['ML', 'PyTorch', 'Time-Series', 'AESO', 'Python'],
       highlights: [
         { num: 'AESO', lbl: 'Real Market Data' },
@@ -654,6 +739,11 @@
       eyebrow: 'Sales & Repair Technician · DECO Windshield Repair · May – Aug 2024 · Calgary, AB',
       title: 'DECO WINDSHIELD',
       navLabel: 'Sales & Repair Tech',
+      images: [
+        { src: 'images/deco/hero.jpg', alt: 'Windshield repair work', caption: 'High-volume technical repair and customer service', wide: true },
+        { src: 'images/deco/image-2.jpg', alt: 'Windshield repair work additional view', caption: 'Add a second project image here' },
+        { src: 'images/deco/image-3.jpg', alt: 'Windshield repair work additional view', caption: 'Add a third project image here' },
+      ],
       tags: ['Sales', 'Repair Tech', 'Customer Service', 'Summer 2024'],
       highlights: [
         { num: '2K+', lbl: 'Protection Plans Sold' },
@@ -674,6 +764,11 @@
       eyebrow: 'Embedded Systems Project · UofC · Feb – Apr 2024',
       title: 'HEAT BEAST',
       navLabel: 'Embedded Project',
+      images: [
+        { src: 'images/heatbeast/hero.jpg', alt: 'Heat Beast embedded systems project', caption: 'Raspberry Pi embedded interface and custom enclosure', wide: true },
+        { src: 'images/heatbeast/image-2.jpg', alt: 'Heat Beast embedded systems project additional view', caption: 'Add a second project image here' },
+        { src: 'images/heatbeast/image-3.jpg', alt: 'Heat Beast embedded systems project additional view', caption: 'Add a third project image here' },
+      ],
       tags: ['Python', 'Raspberry Pi', 'Fusion 360', 'Embedded UI'],
       highlights: [
         { num: '4', lbl: 'Display Types' },
@@ -694,6 +789,11 @@
       eyebrow: 'IoT Project · UofC · Apr – May 2024',
       title: 'WEATHER HOUSE',
       navLabel: 'IoT Project',
+      images: [
+        { src: 'images/weatherhouse/hero.jpg', alt: 'Weather House IoT project', caption: 'Real-time weather visualization using Raspberry Pi and RGB output', wide: true },
+        { src: 'images/weatherhouse/image-2.jpg', alt: 'Weather House IoT project additional view', caption: 'Add a second project image here' },
+        { src: 'images/weatherhouse/image-3.jpg', alt: 'Weather House IoT project additional view', caption: 'Add a third project image here' },
+      ],
       tags: ['Python', 'Raspberry Pi', 'WeatherAPI', 'Fusion 360'],
       highlights: [
         { num: 'Live', lbl: 'Real-Time API Data' },
@@ -723,6 +823,30 @@
     document.getElementById('pd-title').textContent = p.title;
     document.getElementById('pd-nav-label').textContent = p.navLabel;
     document.getElementById('pd-meta').innerHTML = p.tags.map(t => `<span class="pd-tag">${t}</span>`).join('');
+
+    const gallerySection = document.getElementById('pd-gallery-section');
+    const gallery = document.getElementById('pd-gallery');
+    const images = Array.isArray(p.images) ? p.images : [];
+
+    if (images.length > 0) {
+      gallerySection.classList.add('has-images');
+      gallery.innerHTML = images.map((image, index) => `
+        <figure class="pd-gallery-item ${image.wide ? 'wide' : ''}">
+          <img
+            class="pd-gallery-image"
+            src="${image.src}"
+            alt="${image.alt || `${p.title} project image ${index + 1}`}"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';"
+          />
+          <div class="pd-gallery-placeholder" style="display:none;">${p.title}<br>IMAGE ${index + 1}</div>
+          ${image.caption ? `<figcaption class="pd-gallery-caption">${image.caption}</figcaption>` : ''}
+        </figure>
+      `).join('');
+    } else {
+      gallerySection.classList.remove('has-images');
+      gallery.innerHTML = '';
+    }
 
     document.getElementById('pd-highlights').innerHTML = p.highlights
       .map(h => `<div class="pd-hl"><div class="pd-hl-num">${h.num}</div><div class="pd-hl-lbl">${h.lbl}</div></div>`)

@@ -165,6 +165,41 @@
     user-select: none;
   }
 
+  .hero-image{
+    position:absolute;
+
+    right:8%;
+    bottom:6%;
+
+    width:38vw;
+    max-width:700px;
+    min-width:350px;
+
+    z-index:1;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.hero-image img{
+
+    width:100%;
+    height:auto;
+
+    object-fit:contain;
+
+    filter:
+        drop-shadow(0 30px 60px rgba(0,0,0,.45));
+
+    transition:transform .35s ease;
+}
+
+.hero-image img:hover{
+    transform:scale(1.02);
+}
+
+
   /* ─── SECTION BASE ─── */
   section { padding: 7rem 2.5rem; position: relative; }
   .section-label {
@@ -394,6 +429,9 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-bg-num">AZ</div>
+    <div class="hero-image">
+       <img src="striker.png" alt="V167 Striker Alignment Jig">
+    </div>
     <p class="hero-eyebrow">Mech Eng · Developer · Founder · Varsity Athlete · UofC 2028</p>
     <h1 class="hero-name">ALEX<br /><span>ZHANG</span></h1>
     <div class="hero-sub">

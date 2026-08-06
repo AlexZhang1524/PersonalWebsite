@@ -1,16 +1,19 @@
+
+
+Portfolio · HTML
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Alex Zhang — Portfolio</title>
-
+ 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Unbounded:wght@900&display=swap" rel="stylesheet" />
-
+ 
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   :root {
     --black: #0a0a0a;
     --white: #f0ede6;
@@ -20,9 +23,9 @@
     --display: 'Bebas Neue', sans-serif;
     --heavy: 'Unbounded', sans-serif;
   }
-
+ 
   html { scroll-behavior: smooth; }
-
+ 
   body {
     background: var(--black);
     color: var(--white);
@@ -30,7 +33,7 @@
     cursor: none;
     overflow-x: hidden;
   }
-
+ 
   /* ─── CUSTOM CURSOR ─── */
   #cursor-dot {
     width: 8px; height: 8px;
@@ -58,7 +61,7 @@
     border-color: var(--orange);
     opacity: 0.6;
   }
-
+ 
   /* ─── NAV ─── */
   nav {
     position: fixed; top: 0; left: 0; right: 0;
@@ -86,7 +89,7 @@
     transition: opacity 0.2s;
   }
   .nav-links a:hover { opacity: 1; }
-
+ 
   /* ─── HERO ─── */
   #hero {
     min-height: 100vh;
@@ -164,45 +167,45 @@
     pointer-events: none;
     user-select: none;
   }
-
+ 
   .hero-image{
     position:absolute;
     pointer-events: none;
     right:18%;
     bottom:15%;
-
+ 
     width:34vw;
     max-width:550px;
     min-width:350px;
-
+ 
     z-index:1;
-
+ 
     display:flex;
     justify-content:center;
     align-items:center;
 }
-
+ 
 .hero-image img{
-
+ 
     width:100%;
     height:auto;
     border-radius:28px;
-
+ 
     object-fit:contain;
     box-shadow:
         0 25px 80px rgba(0,0,0,.45);
  
     filter:
         drop-shadow(0 30px 60px rgba(0,0,0,.45));
-
+ 
     transition:transform .35s ease;
 }
-
+ 
 .hero-image img:hover{
     transform:scale(1.02);
 }
-
-
+ 
+ 
   /* ─── SECTION BASE ─── */
   section { padding: 7rem 2.5rem; position: relative; }
   .section-label {
@@ -214,7 +217,7 @@
     display: flex; align-items: center; gap: 1rem;
   }
   .section-label::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--orange); opacity: 0.4; }
-
+ 
   /* ─── WORK ─── */
   #work { border-top: 1px solid rgba(255,255,255,0.07); }
   .work-heading { font-family: var(--display); font-size: clamp(3rem, 8vw, 7rem); line-height: 0.92; margin-bottom: 4rem; }
@@ -248,7 +251,7 @@
   .tag { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15); padding: 0.2rem 0.55rem; color: rgba(240,237,230,0.45); }
   .project-arrow { font-size: 1.4rem; color: var(--orange); opacity: 0; transition: opacity 0.25s, transform 0.25s; transform: translateX(-8px); }
   .project-item:hover .project-arrow { opacity: 1; transform: translateX(0); }
-
+ 
   /* ─── ABOUT ─── */
   #about { border-top: 1px solid rgba(255,255,255,0.07); }
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
@@ -260,7 +263,7 @@
   .stat-item { padding: 2rem 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
   .stat-num { font-family: var(--display); font-size: 5rem; color: var(--orange); line-height: 1; }
   .stat-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,237,230,0.4); margin-top: 0.4rem; }
-
+ 
   /* ─── PHYSICSPLAYGROUND ─── */
   #playground { border-top: 1px solid rgba(255,255,255,0.07); min-height: 100vh; display: flex; flex-direction: column; }
   .playground-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
@@ -272,7 +275,7 @@
   .ctrl-btn.danger:hover { background: transparent; border-color: var(--orange); color: var(--orange); }
   #physics-canvas { flex: 1; width: 100%; min-height: 520px; display: block; border: 1px solid rgba(255,255,255,0.07); background: #0d0d0d; }
   .playground-hint { margin-top: 1rem; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,237,230,0.25); text-align: center; }
-
+ 
   /* ─── CONTACT ─── */
   #contact { border-top: 1px solid rgba(255,255,255,0.07); min-height: 60vh; display: flex; flex-direction: column; justify-content: center; }
   .contact-heading { font-family: var(--display); font-size: clamp(3.5rem, 10vw, 10rem); line-height: 0.88; margin-bottom: 3rem; }
@@ -280,10 +283,10 @@
   .contact-links { display: flex; gap: 2rem; flex-wrap: wrap; }
   .contact-link { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,237,230,0.5); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.2rem; transition: color 0.2s, border-color 0.2s; }
   .contact-link:hover { color: var(--orange); border-color: var(--orange); }
-
+ 
   /* ─── FOOTER ─── */
   footer { padding: 2rem 2.5rem; border-top: 1px solid rgba(255,255,255,0.07); display: flex; justify-content: space-between; align-items: center; font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(240,237,230,0.25); text-transform: uppercase; }
-
+ 
   /* ─── PROJECT DETAIL OVERLAY ─── */
   #project-overlay {
     position: fixed; inset: 0; z-index: 500;
@@ -293,7 +296,7 @@
     transition: opacity 0.4s cubic-bezier(.25,.46,.45,.94);
   }
   #project-overlay.open { opacity: 1; pointer-events: all; }
-
+ 
   .pd-topbar {
     position: sticky; top: 0; z-index: 10;
     display: flex; align-items: center; justify-content: space-between;
@@ -318,13 +321,13 @@
   .pd-title { font-family: var(--display); font-size: clamp(3.5rem, 10vw, 9rem); line-height: 0.88; margin-bottom: 2rem; }
   .pd-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
   .pd-tag { font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.15); padding: 0.22rem 0.6rem; color: rgba(240,237,230,0.45); }
-
+ 
   .pd-body { padding: 4rem 2.5rem; max-width: 1000px; }
   .pd-highlights { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.07); margin-bottom: 4rem; }
   .pd-hl { background: var(--black); padding: 1.8rem; }
   .pd-hl-num { font-family: var(--display); font-size: 3rem; color: var(--orange); line-height: 1; }
   .pd-hl-lbl { font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(240,237,230,0.4); margin-top: 0.3rem; }
-
+ 
   .pd-section { margin-bottom: 3.5rem; }
   .pd-section-label { font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--orange); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
   .pd-section-label::after { content: ''; flex: 1; max-width: 50px; height: 1px; background: var(--orange); opacity: 0.35; }
@@ -334,7 +337,7 @@
   .pd-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--orange); font-size: 0.56rem; top: 0.18rem; }
   .pd-tech { display: flex; flex-wrap: wrap; gap: 0.45rem; }
   .pd-pill { font-size: 0.6rem; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.12); padding: 0.25rem 0.6rem; color: rgba(240,237,230,0.5); text-transform: uppercase; }
-
+ 
   .pd-gallery-section { display: none; margin-bottom: 3.5rem; }
   .pd-gallery-section.has-images { display: block; }
   .pd-gallery {
@@ -387,16 +390,16 @@
     font-size: clamp(2rem, 4vw, 4rem);
     color: rgba(240,237,230,0.12);
   }
-
+ 
   #experience { border-top: 1px solid rgba(255,255,255,0.07); }
   #projects { border-top: 1px solid rgba(255,255,255,0.07); }
-
+ 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
   @keyframes scrollDrop { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
   .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s cubic-bezier(.25,.46,.45,.94), transform 0.9s cubic-bezier(.25,.46,.45,.94); }
   .reveal.visible { opacity: 1; transform: translateY(0); }
-
+ 
   @media (max-width: 768px) {
     .about-grid { grid-template-columns: 1fr; gap: 3rem; }
     .hero-sub { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
@@ -412,11 +415,11 @@
   }
 </style>
 </head>
-
+ 
 <body>
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
-
+ 
   <!-- NAV -->
   <nav>
     <a href="#hero" class="nav-logo">AZ</a>
@@ -428,7 +431,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
-
+ 
   <!-- HERO -->
   <section id="hero">
     <div class="hero-bg-num">AZ</div>
@@ -447,12 +450,12 @@
     </div>
     <div class="hero-scroll-hint"><div class="scroll-line"></div>Scroll</div>
   </section>
-
+ 
   <!-- EXPERIENCE -->
   <section id="experience">
     <div class="section-label">Work Experience</div>
     <h2 class="work-heading reveal">WHERE<br />I'VE<br />SHIPPED</h2>
-
+ 
     <div class="project-list">
       <div class="project-item reveal" onclick="openProject('mercedes')">
         <span class="project-num">01</span>
@@ -486,7 +489,7 @@
         </div>
         <span class="project-arrow">→</span>
       </div>
-
+ 
       <div class="project-item reveal" onclick="openProject('jandae')">
         <span class="project-num">04</span>
         <div class="project-info">
@@ -497,7 +500,7 @@
         </div>
         <span class="project-arrow">→</span>
       </div>
-
+ 
       <div class="project-item reveal" onclick="openProject('research')">
         <span class="project-num">05</span>
         <div class="project-info">
@@ -508,7 +511,7 @@
         </div>
         <span class="project-arrow">→</span>
       </div>
-
+ 
       <div class="project-item reveal" onclick="openProject('deco')">
         <span class="project-num">06</span>
         <div class="project-info">
@@ -521,12 +524,12 @@
       </div>
     </div>
   </section>
-
+ 
   <!-- PROJECTS -->
   <section id="projects">
     <div class="section-label">Personal Projects</div>
     <h2 class="work-heading reveal">THINGS<br />I'VE<br />BUILT</h2>
-
+ 
     <div class="project-list">
       <div class="project-item reveal" onclick="openProject('heatbeast')">
         <span class="project-num">01</span>
@@ -538,7 +541,7 @@
         </div>
         <span class="project-arrow">→</span>
       </div>
-
+ 
       <div class="project-item reveal" onclick="openProject('weatherhouse')">
         <span class="project-num">02</span>
         <div class="project-info">
@@ -551,7 +554,7 @@
       </div>
     </div>
   </section>
-
+ 
   <!-- ABOUT -->
   <section id="about">
     <div class="section-label">About Me</div>
@@ -567,7 +570,7 @@
         <p class="about-text reveal">
           Currently open to fall 2026 internships in mechanical, production, quality, and electrical engineering.
         </p>
-
+ 
         <div class="skills-grid reveal">
           <div class="skill-item">Python · ML</div>
           <div class="skill-item">Next.js · TypeScript</div>
@@ -579,7 +582,7 @@
           <div class="skill-item">Raspberry Pi · Edge</div>
         </div>
       </div>
-
+ 
       <div class="about-stat-col reveal">
         <div class="stat-item"><div class="stat-num">99%</div><div class="stat-label">Tooling Cost Reduced @ Mercedes</div></div>
         <div class="stat-item"><div class="stat-num">5fig</div><div class="stat-label">Revenue — Jandae Brand</div></div>
@@ -587,7 +590,7 @@
       </div>
     </div>
   </section>
-
+ 
   <!-- PLAYGROUND -->
   <section id="playground">
     <div class="section-label">Interactive</div>
@@ -604,7 +607,7 @@
     <canvas id="physics-canvas"></canvas>
     <p class="playground-hint">Move your mouse over the canvas · Click to spawn particles · Toggle physics modes above</p>
   </section>
-
+ 
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-label">Get In Touch</div>
@@ -616,13 +619,13 @@
       <a href="Alex_Zhang_s_Resume___Mech (4).pdf" download class="contact-link">Resume ↓</a>
     </div>
   </section>
-
+ 
   <footer>
     <span>© 2026 Alex Zhang</span>
     <span>Do What? Do Work!</span>
     <span>Calgary, AB</span>
   </footer>
-
+ 
   <!-- ─── PROJECT DETAIL OVERLAY ─── -->
   <div id="project-overlay">
     <div class="pd-topbar">
@@ -636,33 +639,42 @@
     </div>
     <div class="pd-body">
       <div class="pd-highlights" id="pd-highlights"></div>
+ 
       <div class="pd-section">
-        <div class="pd-section-label">Overview</div>
-        <div class="pd-text" id="pd-overview"></div>
+        <div class="pd-section-label">Project Goal</div>
+        <div class="pd-text" id="pd-goal"></div>
       </div>
+ 
       <div class="pd-gallery-section" id="pd-gallery-section">
         <div class="pd-section-label">Project Gallery</div>
         <div class="pd-gallery" id="pd-gallery"></div>
       </div>
+ 
       <div class="pd-section">
-        <div class="pd-section-label">What I Built</div>
-        <ul class="pd-bullets" id="pd-bullets"></ul>
+        <div class="pd-section-label">System Design &amp; Implementation</div>
+        <ul class="pd-bullets" id="pd-design"></ul>
       </div>
+ 
+      <div class="pd-section">
+        <div class="pd-section-label">Impact</div>
+        <ul class="pd-bullets" id="pd-impact"></ul>
+      </div>
+ 
       <div class="pd-section">
         <div class="pd-section-label">Tech Stack</div>
         <div class="pd-tech" id="pd-tech"></div>
       </div>
     </div>
   </div>
-
+ 
 <script>
   // ─── CURSOR ───
   const dot = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
   let mx = 0, my = 0, rx = 0, ry = 0;
-
+ 
   document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
+ 
   function animateCursor() {
     dot.style.left = mx + 'px';
     dot.style.top = my + 'px';
@@ -673,7 +685,7 @@
     requestAnimationFrame(animateCursor);
   }
   animateCursor();
-
+ 
   // ─── SCROLL REVEAL ───
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -683,9 +695,9 @@
       }
     });
   }, { threshold: 0.12 });
-
+ 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
+ 
   // ─── PROJECT DATA ───
   const PROJECTS = {
     mercedes: {
@@ -708,20 +720,25 @@
         { num: '+15%', lbl: 'Alignment Performance' },
         { num: '$9,900', lbl: 'Saved on Single Jig' },
       ],
-      overview: 'At Mercedes-Benz, I worked as a Vehicle Production Engineering Intern on the EV Quality Team. I split my time between mechanical fixture design, statistical process tooling, AI vision system development, and cross-functional technical leadership — shipping real work on a live production line.',
-      bullets: [
-        'Engineered a V167 striker-liftgate alignment jig in Siemens NX using Smaragd PLM CAD data — applied GD&T and tolerance stack-up analysis to reduce tooling cost from $10,000 to $100 (99% reduction) while improving alignment performance by 15%.',
-        'Developed an analysis tool in Python to compute and visualize Type 1 gauge R&R, automating standard deviation, meanshift, and Cp/Cpk calculations to validate tool reliability and repeatability.',
-        'Developed a PowerBI dashboard integrating production defect data and AI fastener detection outputs to visualize KPIs and provide structured feedback to vision system engineers.',
-        'Co-developed PVC and underbody AI vision system use cases through camera configuration, PLC and edge device deployment. Conducted validation testing to optimize precision, recall, and false detection rates; created Python scripts to visualize detector performance trends',
-        'Led and moderated SK Rear and SK Powertrain/Chassis quality meetings, driving cross-functional collaboration and maintaining structured meeting minute documentation on SFM',
-        'Conducted in depth noise, vibration, and hardness (NVH) testing on new MOPF vehicles, identifying buildability and functionality issues through root cause analysis, providing feedback to quality engineers.',
-        'Conducted in-depth liftgate, bumper, tail lamp, sidwell gap and flush tests for the V167 striker jig to give feedback to team members and engineers to ensure product quality against quality regulations, and ISO standards ramp up.',
+      goal: 'Support the EV Quality team on a live production line by driving down fixture tooling costs, tightening liftgate alignment tolerances, and improving the data feeding AI-based fastener detection systems — all without disrupting active production.',
+      design: [
+        'Engineered a V167 striker-liftgate alignment jig in Siemens NX from Smaragd PLM CAD data, applying GD&T and tolerance stack-up analysis to redesign the tooling around a far cheaper alignment approach.',
+        'Built a Python analysis tool to compute Type 1 gauge R&R (standard deviation, mean shift, Cp/Cpk) so tool reliability and repeatability could be validated before rollout.',
+        'Co-developed PVC and underbody AI vision use cases — configured cameras and PLC/edge device deployment, then ran validation testing to tune detector precision, recall, and false-detection rates.',
+        'Built a PowerBI dashboard merging production defect data with AI fastener-detection outputs, plus Python scripts to visualize detector performance trends over time.',
+        'Led SK Rear and SK Powertrain/Chassis quality meetings and maintained structured SFM documentation to keep cross-functional teams aligned.',
+        'Ran NVH, liftgate, bumper, tail lamp, and sidewall gap/flush testing on new MOPF vehicles, feeding root-cause findings back to quality engineers.',
+      ],
+      impact: [
+        'Cut the striker jig\'s tooling cost from $10,000 to $100 — a 99% reduction — while improving alignment performance by 15%.',
+        'Saved $9,900 on a single jig, with the redesign reusable across comparable fixtures.',
+        'Sharpened the feedback loop between production defect data and vision engineers, improving fastener detection accuracy.',
+        'Gave quality engineers earlier visibility into buildability and functionality issues through structured root-cause documentation.',
       ],
       tech: ['Python', 'Siemens NX', 'Smaragd PLM', 'PowerBI', 'Power Automate', 'GD&T', 'Gage R&R', 'SPC', 'OpenCV', 'Edge Devices'],
     },
-
-
+ 
+ 
     iconic: {
       eyebrow: 'Substation Eng Intern · Iconic Power Systems · May – Aug 2026 · Calgary, AB',
       title: 'ICONIC POWER SYSTEMS',
@@ -740,13 +757,18 @@
         { num: '5+', lbl: 'Apps and Tools created' },
         { num: 'Substation', lbl: 'P&C Engineering Support' },
       ],
-      overview: 'At Iconic Power Systems, I worked as a Substation Engineering Intern supporting transmission and distribution projects across electrical design, quality assurance, and engineering automation. I developed internal software tools using Python, Power BI, and PowerApps to streamline engineering workflows, automate data management, and improve project visibility, while also supporting substation design reviews, commissioning inspections, and quality verification of high-voltage equipment.',
-      bullets: [
-        'Developed a Python/HTML application that enables intelligent searching of Excel documents using a hybrid retrieval system combining BM25 ranking, fuzzy string matching, synonym expansion, and automated spell correction.',
-        'Developed a Python  application with a Tkinter GUI that centralizes project checklists and reusable templates, utilizing JSON for local data storage and OpenPyXL for Excel export and reporting.',
-        'Developed a live Power BI dashboard that extracts data from SharePoint, transforms and consolidates project data, visualizes budget performance, forecast trends, and project progress for engineering project managers.',
-        'Developed a Lessons Learned App on Powerapps with a sharepoint backend to centralize topic issues from all teams.',
-        'Performed quality assurance inspections on transformers, tap changers, protection relays, and switching equipment during substation construction and commissioning, verifying compliance with engineering specifications, operational requirements, and utility quality standards while documenting deficiencies for corrective action',
+      goal: 'Give Iconic Power Systems\' engineering teams better tools for document search, project visibility, and quality tracking across active transmission and distribution work, while supporting hands-on substation QA in the field.',
+      design: [
+        'Built a Python/HTML app for intelligent Excel search using a hybrid retrieval system: BM25 ranking, fuzzy string matching, synonym expansion, and automated spell correction.',
+        'Built a Python app with a Tkinter GUI to centralize project checklists and reusable templates, using JSON for local storage and OpenPyXL for Excel export and reporting.',
+        'Built a live PowerBI dashboard that pulls and consolidates project data from SharePoint to visualize budget performance, forecast trends, and progress for project managers.',
+        'Built a Lessons Learned app on PowerApps with a SharePoint backend to centralize issue tracking across teams.',
+        'Performed QA inspections on transformers, tap changers, protection relays, and switching equipment during substation construction and commissioning.',
+      ],
+      impact: [
+        'Automated the handling of 14,000+ project records previously tracked manually.',
+        'Shipped 5+ internal tools now used across engineering teams for search, checklists, and reporting.',
+        'Verified high-voltage equipment compliance against engineering specs and utility quality standards, documenting deficiencies for corrective action.',
       ],
       tech: ['Python', 'BlueBeam', 'PowerApps', 'PowerBI', 'Power Automate', 'High Voltage Equipment', 'Power Distribution', 'Lessons Learned'],
     },
@@ -766,15 +788,19 @@
         { num: 'Full', lbl: 'Stack Ownership' },
         { num: 'Backend', lbl: 'Supabase Programming' },
       ],
-      overview: 'Velric AI is a New York-based AI startup where I work as a Software Development Intern. I\'m building full-stack features across the mission-task infrastructure, AI personalization layer, and frontend theming — shipping directly to production in Next.js and Supabase.',
-      bullets: [
-        'Architected mission-task infrastructure in Supabase using normalized PostgreSQL schema design, indexed SQL queries, and relational data modeling with secure auth integration.',
-        'Implemented dynamic light/dark theme support in Next.js (TypeScript) using state-driven rendering, TailwindCSS theming, and component-level UI optimization.',
-        'Integrated OpenAI API within Next.js API routes to build AI-driven mission personalization — engineered prompt pipelines, response parsing, and intent-based task generation for adaptive user experiences.',
+      goal: 'Ship full-stack features — mission-task infrastructure, AI-driven personalization, and UI theming — directly to production for an early-stage AI startup, with end-to-end ownership from schema to UI.',
+      design: [
+        'Architected mission-task infrastructure in Supabase using a normalized PostgreSQL schema, indexed SQL queries, and secure auth integration.',
+        'Implemented dynamic light/dark theme support in Next.js (TypeScript) using state-driven rendering and TailwindCSS theming.',
+        'Integrated the OpenAI API into Next.js API routes, engineering prompt pipelines and response parsing for intent-based, adaptive task generation.',
+      ],
+      impact: [
+        'Delivered AI-driven mission personalization that adapts task generation to individual user intent.',
+        'Took full ownership of backend schema design end-to-end, shipping directly to a live production app.',
       ],
       tech: ['Next.js', 'TypeScript', 'Supabase', 'PostgreSQL', 'OpenAI API', 'TailwindCSS', 'Node.js', 'REST APIs', 'Git / CI-CD'],
     },
-
+ 
     jandae: {
       eyebrow: 'Founder · Jandae · Oct 2025 – Present · Calgary, AB',
       title: 'JANDAE',
@@ -790,15 +816,19 @@
         { num: '100%', lbl: 'Self-Designed Products' },
         { num: '0→1', lbl: 'jandae.ca' },
       ],
-      overview: 'Jandae is a vintage clothing brand I founded, scaled to five-figure revenue, and run end-to-end — from product concept to manufacturing to digital storefront. Every product is designed by me, every system is built by me.',
-      bullets: [
-        'Founded and scaled a vintage clothing brand to five-figure revenue, owning end-to-end product development and manufacturing.',
-        'Designed all products from concept to production: fabric selection, fit development, sampling iterations, and detail refinement.',
-        'Built and launched the brand e-commerce website, optimizing user flows, checkout experience, and conversion pathways.',
+      goal: 'Build a vintage clothing brand from zero — owning every part of the product, from design to manufacturing to the storefront customers actually buy from.',
+      design: [
+        'Designed every product from concept to production: fabric selection, fit development, sampling iterations, and detail refinement.',
+        'Built and launched jandae.ca, optimizing user flows, checkout experience, and conversion pathways.',
+        'Managed sourcing, manufacturing coordination, and brand strategy end-to-end.',
+      ],
+      impact: [
+        'Scaled the brand to five-figure revenue with a 100% self-designed product line.',
+        'Took jandae.ca from zero to a live, converting storefront.',
       ],
       tech: ['E-Commerce', 'Web Dev', 'Product Design', 'Fabric Sourcing', 'Brand Strategy', 'Conversion Optimization'],
     },
-
+ 
     research: {
       eyebrow: 'Undergraduate Research Assistant · University of Calgary · Sept 2024 – Present',
       title: 'UNDERGRAD RESEARCH',
@@ -813,15 +843,19 @@
         { num: 'FB Prophet', lbl: 'Architecture Used' },
         { num: 'Live', lbl: 'Deployment Target' },
       ],
-      overview: 'As an Undergraduate Research Assistant at the University of Calgary, I\'m developing a machine learning forecasting system to optimize electricity purchasing strategies by modeling time-series price fluctuations and demand variability in the Alberta energy market (AESO).',
-      bullets: [
-        'Developing a time-series ML model to optimize electricity purchasing strategies by modeling AESO price fluctuations and demand variability.',
-        'Validated model performance using historical AESO market data — applied MAE/RMSE error metrics and iterative hyperparameter tuning to improve prediction accuracy and robustness.',
-        'Building a predictive decision-support system to identify optimal purchasing windows from real-time AESO price signals for live deployment.',
+      goal: 'Build a machine learning system to optimize electricity purchasing strategies by modeling price and demand volatility in the Alberta energy market (AESO).',
+      design: [
+        'Developed a time-series ML model to forecast AESO price fluctuations and demand variability.',
+        'Validated performance against historical AESO market data using MAE/RMSE error metrics and iterative hyperparameter tuning.',
+        'Building a predictive decision-support system to flag optimal purchasing windows from real-time AESO price signals.',
+      ],
+      impact: [
+        'Improved forecast accuracy and robustness through iterative tuning against real market data.',
+        'Working toward a live decision-support tool aimed at identifying cost-saving purchasing windows for real deployment.',
       ],
       tech: ['Python', 'PyTorch', 'TensorFlow', 'StatsForecast', 'Pandas', 'NumPy', 'Time-Series', 'MAE / RMSE', 'Feature Engineering', 'Hyperparameter Tuning'],
     },
-
+ 
     deco: {
       eyebrow: 'Sales & Repair Technician · DECO Windshield Repair · May – Aug 2024 · Calgary, AB',
       title: 'DECO WINDSHIELD',
@@ -836,16 +870,19 @@
         { num: '1K+', lbl: 'Repairs Completed' },
         { num: '100%', lbl: 'Daily Targets Met' },
       ],
-      overview: 'At DECO Windshield Repair I worked as a Sales & Repair Technician over the summer, combining hands-on precision repair work with high-volume performance-driven sales. I operated under tight time constraints while maintaining quality and hitting daily revenue targets.',
-      bullets: [
-        'Sold 2,000+ protection plans and completed 1,000+ repairs by combining technical product knowledge with performance-driven sales execution.',
-        'Performed high-volume windshield repair operations using precision power tools including drills, resin injection systems, and UV curing equipment to restore structural integrity.',
-        'Executed hands-on fabrication and surface preparation procedures — precise chip cleaning, vacuum sealing, and controlled resin application under time-sensitive conditions.',
-        'Managed defect assessment, repair validation, and end-to-end customer service while consistently meeting daily operational and revenue targets.',
+      goal: 'Hit daily sales and repair targets on a high-volume windshield repair route while maintaining repair quality under tight time constraints.',
+      design: [
+        'Performed high-volume windshield repairs using precision power tools — drills, resin injection systems, and UV curing equipment.',
+        'Executed chip cleaning, vacuum sealing, and controlled resin application under time-sensitive field conditions.',
+        'Managed defect assessment, repair validation, and end-to-end customer service on each job.',
+      ],
+      impact: [
+        'Sold 2,000+ protection plans and completed 1,000+ repairs over the summer.',
+        'Consistently met daily operational and revenue targets.',
       ],
       tech: ['Resin Injection', 'UV Curing', 'Vacuum Sealing', 'Precision Tools', 'Customer Service', 'Sales'],
     },
-
+ 
     heatbeast: {
       eyebrow: 'Embedded Systems Project · UofC · Feb – Apr 2024',
       title: 'HEAT BEAST',
@@ -860,16 +897,20 @@
         { num: '100%', lbl: 'Custom Built' },
         { num: '2mo', lbl: 'Build Time' },
       ],
-      overview: 'Heat Beast is a fully custom-programmed smart microwave cooking companion built on a Raspberry Pi. The project focused on creating an intelligent embedded system with a rich physical UI — going beyond a standard microwave with programmable cook profiles, real-time feedback, and multi-hardware display orchestration.',
-      bullets: [
-        'Programmed advanced cooking control algorithms in Python on Raspberry Pi — handling timed sequences, power levels, and sensor-driven adjustments.',
-        'Designed and integrated a multi-component embedded UI: dot-matrix display, 7-segment timer, LCD status screen, and audio feedback for a cohesive experience.',
+      goal: 'Build a smart microwave cooking companion on a Raspberry Pi with a rich physical UI — going beyond a stock microwave with programmable cook profiles and real-time feedback.',
+      design: [
+        'Programmed cooking control algorithms in Python — timed sequences, power levels, and sensor-driven adjustments.',
+        'Integrated a multi-component embedded UI: dot-matrix display, 7-segment timer, LCD status screen, and audio feedback.',
         'Modeled the physical enclosure and hardware layout in Fusion 360, prototyping fit and cable routing before final assembly.',
-        'Implemented hardware-software integration layer for reliable serial communication between all display components and the main controller.',
+        'Built a hardware-software integration layer for reliable serial communication between all display components and the main controller.',
+      ],
+      impact: [
+        'Delivered a fully custom-built device coordinating 4 distinct display types in one cohesive interface.',
+        'Took the project from design through fabrication in about 2 months.',
       ],
       tech: ['Python', 'Raspberry Pi', 'Fusion 360', 'Dot-Matrix', '7-Segment LED', 'LCD Module', 'Serial Comm', 'GPIO'],
     },
-
+ 
     weatherhouse: {
       eyebrow: 'IoT Project · UofC · Apr – May 2024',
       title: 'WEATHER HOUSE',
@@ -884,34 +925,38 @@
         { num: 'RGB', lbl: 'Dynamic Color Output' },
         { num: '1mo', lbl: 'Build Time' },
       ],
-      overview: 'Weather House is an ambient IoT display that visualizes real-time weather data through dynamic color and LCD output. Built in Fusion 360 and powered by a Raspberry Pi, it pulls live conditions from WeatherAPI and translates them into intuitive color shifts — making environmental data readable at a glance from across the room.',
-      bullets: [
+      goal: 'Build an ambient IoT display that makes live weather data readable at a glance, without a screen, from across a room.',
+      design: [
         'Integrated WeatherAPI via HTTP requests in Python, polling live temperature, conditions, and UV data on a configurable refresh interval.',
-        'Mapped weather condition codes to dynamic RGB LED outputs — the color of the display communicates the weather without any screen interaction.',
+        'Mapped weather condition codes to dynamic RGB LED outputs so color alone communicates the weather.',
         'Displayed detailed weather stats on an LCD module with a clean formatted layout.',
         'Designed and fabricated the physical housing in Fusion 360, optimizing for LED diffusion and internal cable management.',
         'Implemented error handling and graceful fallback for API timeouts and network interruptions.',
       ],
+      impact: [
+        'Delivered a working ambient display that translates live weather data into instant, screen-free visual feedback.',
+        'Took the project from concept to a finished, fabricated housing in about a month.',
+      ],
       tech: ['Python', 'Raspberry Pi', 'WeatherAPI', 'REST / HTTP', 'RGB LEDs', 'LCD Module', 'Fusion 360', 'GPIO'],
     },
   };
-
+ 
   // ─── OVERLAY LOGIC ───
   const overlay = document.getElementById('project-overlay');
-
+ 
   function openProject(id) {
     const p = PROJECTS[id];
     if (!p) return;
-
+ 
     document.getElementById('pd-eyebrow').textContent = p.eyebrow;
     document.getElementById('pd-title').textContent = p.title;
     document.getElementById('pd-nav-label').textContent = p.navLabel;
     document.getElementById('pd-meta').innerHTML = p.tags.map(t => `<span class="pd-tag">${t}</span>`).join('');
-
+ 
     const gallerySection = document.getElementById('pd-gallery-section');
     const gallery = document.getElementById('pd-gallery');
     const images = Array.isArray(p.images) ? p.images : [];
-
+ 
     if (images.length > 0) {
       gallerySection.classList.add('has-images');
       gallery.innerHTML = images.map((image, index) => `
@@ -931,32 +976,33 @@
       gallerySection.classList.remove('has-images');
       gallery.innerHTML = '';
     }
-
+ 
     document.getElementById('pd-highlights').innerHTML = p.highlights
       .map(h => `<div class="pd-hl"><div class="pd-hl-num">${h.num}</div><div class="pd-hl-lbl">${h.lbl}</div></div>`)
       .join('');
-
-    document.getElementById('pd-overview').textContent = p.overview;
-    document.getElementById('pd-bullets').innerHTML = p.bullets.map(b => `<li>${b}</li>`).join('');
+ 
+    document.getElementById('pd-goal').textContent = p.goal;
+    document.getElementById('pd-design').innerHTML = p.design.map(b => `<li>${b}</li>`).join('');
+    document.getElementById('pd-impact').innerHTML = p.impact.map(b => `<li>${b}</li>`).join('');
     document.getElementById('pd-tech').innerHTML = p.tech.map(t => `<span class="pd-pill">${t}</span>`).join('');
-
+ 
     overlay.scrollTop = 0;
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
+ 
   function closeProject() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
   }
-
+ 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeProject(); });
-
+ 
   // ─── PHYSICS PLAYGROUND ───
   const canvas = document.getElementById('physics-canvas');
   const ctx = canvas.getContext('2d');
   let W, H, particles = [], mouse = { x: -1000, y: -1000, inside: false }, mode = 'gravity';
-
+ 
   function resize() {
     const r = canvas.getBoundingClientRect();
     canvas.width = r.width;
@@ -966,7 +1012,7 @@
   }
   resize();
   window.addEventListener('resize', resize);
-
+ 
   class Particle {
     constructor(x, y, vx, vy) {
       this.x = x ?? Math.random() * W;
@@ -981,26 +1027,26 @@
     update() {
       this.trail.push({ x: this.x, y: this.y });
       if (this.trail.length > 8) this.trail.shift();
-
+ 
       const dx = mouse.x - this.x, dy = mouse.y - this.y;
       const dist = Math.sqrt(dx * dx + dy * dy) || 1, inf = 180;
-
+ 
       if (mouse.inside && dist < inf) {
         const f = (inf - dist) / inf;
         if (mode === 'repel') { this.vx -= (dx / dist) * f * 1.2; this.vy -= (dy / dist) * f * 1.2; }
         else if (mode === 'attract') { this.vx += (dx / dist) * f * 0.8; this.vy += (dy / dist) * f * 0.8; }
         else if (mode === 'gravity') { this.vx += (dx / dist) * f * 0.3; this.vy += (dy / dist) * f * 0.3; }
       }
-
+ 
       if (mode === 'gravity') this.vy += 0.06;
-
+ 
       this.vx *= 0.985; this.vy *= 0.985;
-
+ 
       const spd = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
       if (spd > 14) { this.vx = (this.vx / spd) * 14; this.vy = (this.vy / spd) * 14; }
-
+ 
       this.x += this.vx; this.y += this.vy;
-
+ 
       if (this.x < this.r) { this.x = this.r; this.vx *= -0.7; }
       if (this.x > W - this.r) { this.x = W - this.r; this.vx *= -0.7; }
       if (this.y < this.r) { this.y = this.r; this.vy *= -0.7; }
@@ -1014,20 +1060,20 @@
         ctx.fillStyle = `hsla(${this.hue},100%,55%,${a})`;
         ctx.fill();
       }
-
+ 
       const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 3);
       g.addColorStop(0, `hsla(${this.hue},100%,60%,${this.alpha * 0.35})`);
       g.addColorStop(1, `hsla(${this.hue},100%,50%,0)`);
-
+ 
       ctx.beginPath(); ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
       ctx.fillStyle = g; ctx.fill();
-
+ 
       ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
       ctx.fillStyle = `hsla(${this.hue},100%,65%,${this.alpha})`;
       ctx.fill();
     }
   }
-
+ 
   function spawnParticles(n = 80) { for (let i = 0; i < n; i++) particles.push(new Particle()); }
   function resetParticles() { particles = []; spawnParticles(80); }
   function explode() {
@@ -1044,7 +1090,7 @@
     const map = { gravity: 'btn-gravity', repel: 'btn-repel', attract: 'btn-attract' };
     if (map[m]) document.getElementById(map[m]).classList.add('active');
   }
-
+ 
   canvas.addEventListener('mousemove', e => {
     const r = canvas.getBoundingClientRect();
     mouse.x = (e.clientX - r.left) * (canvas.width / r.width);
@@ -1061,7 +1107,7 @@
       particles.push(new Particle(cx, cy, Math.cos(a) * s, Math.sin(a) * s));
     }
   });
-
+ 
   function drawConnections() {
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
@@ -1078,7 +1124,7 @@
       }
     }
   }
-
+ 
   function loop() {
     ctx.fillStyle = 'rgba(13,13,13,0.22)';
     ctx.fillRect(0, 0, W, H);
@@ -1087,10 +1133,9 @@
     if (particles.length > 300) particles.splice(0, particles.length - 300);
     requestAnimationFrame(loop);
   }
-
+ 
   spawnParticles(80);
   loop();
 </script>
 </body>
 </html>
-```
